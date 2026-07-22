@@ -31,22 +31,28 @@ public class CommonMethods extends pageInitialiser {
             );
         }
 
+        boolean headless = false;
+
         switch (browser.toLowerCase()) {
 
             case "chrome":
 
                 ChromeOptions options = new ChromeOptions();
 
-                String headlessValue = ConfigReader.read("headless");
-                boolean headless =
-                        Boolean.parseBoolean(headlessValue);
+                String headlessValue = System.getProperty(
+                        "headless",
+                        ConfigReader.read("headless")
+                );
+
+                headless = Boolean.parseBoolean(headlessValue);
+
+                System.out.println("Headless mode: " + headless);
 
                 if (headless) {
                     options.addArguments("--headless=new");
                     options.addArguments("--window-size=1920,1080");
                 }
 
-                // Important for Jenkins/Linux/Docker
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--disable-gpu");
@@ -77,13 +83,11 @@ public class CommonMethods extends pageInitialiser {
                 .timeouts()
                 .implicitlyWait(Duration.ofSeconds(20));
 
-        if (!Boolean.parseBoolean(ConfigReader.read("headless"))) {
+        if (!headless) {
             driver.manage().window().maximize();
         }
 
         driver.get(ConfigReader.read("url"));
-
-        // Initializes LoginPage, AddEmployee, etc.
         initilizePageObjects();
     }
 

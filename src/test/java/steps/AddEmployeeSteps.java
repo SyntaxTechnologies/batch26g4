@@ -11,8 +11,6 @@ public class AddEmployeeSteps extends CommonMethods {
     @When("user login to HRMS application")
     public void user_login_to_hrms_application() {
 
-        driver.get(ConfigReader.read("url"));
-
         sendText(
                 ConfigReader.read("userName"),
                 loginPage.usernameLoc

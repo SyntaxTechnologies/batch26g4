@@ -11,14 +11,19 @@ public class AddEmployeeSteps extends CommonMethods {
     @When("user login to HRMS application")
     public void user_login_to_hrms_application() {
 
-        // Open browser
-        openBrowserAndLaunchApplication();
-
-        // Initialize Page Objects
-        initilizePageObjects();
-
-        // Navigate to application
         driver.get(ConfigReader.read("url"));
+
+        sendText(
+                ConfigReader.read("userName"),
+                loginPage.usernameLoc
+        );
+
+        sendText(
+                ConfigReader.read("password"),
+                loginPage.passwordLoc
+        );
+
+        click(loginPage.loginBtn);
     }
 
     @When("user navigate to PIM page")

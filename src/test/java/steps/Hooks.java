@@ -15,19 +15,30 @@ public class Hooks extends CommonMethods {
     @After
     public void end(Scenario scenario) {
 
-        if (driver != null) {
-            byte[] picture = takeScreenshot(
-                    (scenario.isFailed() ? "failed/" : "passed/")
-                            + scenario.getName()
+        try {
+            if (driver != null) {
+
+                byte[] picture = takeScreenshot(
+                        (scenario.isFailed() ? "failed/" : "passed/")
+                                + scenario.getName()
+                );
+
+                scenario.attach(
+                        picture,
+                        "image/png",
+                        scenario.getName()
+                );
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Screenshot could not be taken: " + e.getMessage()
             );
 
-            scenario.attach(
-                    picture,
-                    "image/png",
-                    scenario.getName()
-            );
+        } finally {
+
+            closeBrowser();
         }
-
-        closeBrowser();
     }
 }

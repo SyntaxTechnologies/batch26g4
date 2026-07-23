@@ -14,18 +14,24 @@ public class LoginSteps extends CommonMethods {
 
     @Given("user is able to launch HRMS application")
     public void user_is_able_to_launch_hrms_application() {
-        //creates driver
-        openBrowserAndLaunchApplication();
-        //creates LoginPage and WebElements
-        initilizePageObjects();
-        //Opens application
-        driver.get(ConfigReader.read("url"));
+        Assert.assertNotNull(
+                "Browser was not launched",
+                driver
+        );
     }
     @When("user enters valid username and valid password")
     public void user_enters_valid_username_and_valid_password() {
-        sendText(ConfigReader.read("userName"), loginPage.usernameLoc);
-        sendText(ConfigReader.read("password"), loginPage.passwordLoc);
+        sendText(
+                ConfigReader.read("userName"),
+                loginPage.usernameLoc
+        );
+
+        sendText(
+                ConfigReader.read("password"),
+                loginPage.passwordLoc
+        );
     }
+
     @When("user clicks on login button")
     public void user_clicks_on_login_button() {
         click(loginPage.loginBtn);

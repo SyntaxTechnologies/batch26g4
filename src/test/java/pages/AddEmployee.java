@@ -28,7 +28,7 @@ public class AddEmployee extends CommonMethods {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement saveButton;
 
-    @FindBy(xpath = "//h6[text()='Personal Details']")
+    @FindBy(xpath = "//h6[normalize-space()='Personal Details']")
     public WebElement personalDetailsHeader;
 
     @FindBy(xpath = "//span[text()='Required']")

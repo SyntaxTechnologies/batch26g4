@@ -3,8 +3,14 @@ package steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.CommonMethods;
 import utils.ConfigReader;
+
+import java.time.Duration;
 
 public class AddEmployeeSteps extends CommonMethods {
 
@@ -42,6 +48,11 @@ public class AddEmployeeSteps extends CommonMethods {
         sendText("Mohammad", addEmployee.firstNameLoc);
         sendText("Khalid", addEmployee.middleNameLoc);
         sendText("Shoaiby", addEmployee.lastNameLoc);
+
+        String employeeId =
+                String.valueOf(System.currentTimeMillis()).substring(7);
+
+        sendText(employeeId, addEmployee.employeeIdLoc);
     }
 
     @When("user fill the fields except employee ID")
@@ -82,7 +93,18 @@ public class AddEmployeeSteps extends CommonMethods {
     @Then("employee is saved successfully")
     public void employee_is_saved_successfully() {
 
-        Assert.assertTrue(addEmployee.personalDetailsHeader.isDisplayed());
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        wait.until(
+                ExpectedConditions.visibilityOf(
+                        addEmployee.personalDetailsHeader
+                )
+        );
+
+        Assert.assertTrue(
+                "Employee was not saved successfully",
+                addEmployee.personalDetailsHeader.isDisplayed()
+        );
     }
 
     @Then("error message should be displayed")

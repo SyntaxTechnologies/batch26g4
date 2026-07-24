@@ -10,9 +10,11 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "steps",
         dryRun =false,
+        tags = "@Nermin3 or @Nermin2 or @Nermin",
         plugin = {"pretty",
         "html:target/cucumber.html",
         "json:target/jsonReports/cucumber.json"}
+
 
 )
 public class TestRunner {

@@ -106,7 +106,7 @@ public class CommonMethods extends pageInitialiser {
             );
         }
 
-        element.clear();
+        element.sendKeys(Keys.CONTROL + "a", Keys.BACK_SPACE);
         element.sendKeys(text);
     }
 
